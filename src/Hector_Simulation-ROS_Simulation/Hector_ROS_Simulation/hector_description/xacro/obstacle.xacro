@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="obstacle_model">
+
+    <xacro:property name="obstacle_length" value="1.0" />
+    <xacro:property name="obstacle_width" value="1.0" />
+    <xacro:property name="obstacle_height" value="1.0" />
+    <xacro:property name="obstacle_mass" value="10.0" />
+
+    <!-- Define the world link -->
+    <link name="world"/>
+
+    <xacro:macro name="obstacle" params="name xpos ypos zpos length width height">
+        <!-- Define the joint to attach the obstacle to the world -->
+        <joint name="${name}_joint" type="fixed">
+            <parent link="world"/>
+            <child link="${name}_link"/>
+            <origin rpy="0 0 0" xyz="${xpos} ${ypos} ${zpos}"/>
+        </joint>
+
+        <!-- Obstacle link -->
+        <link name="${name}_link">
+            <visual>
+                <geometry>
+                    <box size="${length} ${width} ${height}"/>
+                </geometry>
+                <material name="red"> <!-- Red color with name -->
+                    <color rgba="1 0 0 1"/>
+                </material>
+                <origin rpy="0 0 0" xyz="0 0 ${height/2}"/>
+            </visual>
+            <collision>
+                <geometry>
+                    <box size="${length} ${width} ${height}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="${obstacle_mass}"/>
+                <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+            </inertial>
+        </link>
+
+        <!-- Add static property for Gazebo -->
+        <gazebo>
+            <static>true</static>
+        </gazebo>
+    </xacro:macro>
+
+    <!-- Instantiate the obstacle -->
+    <xacro:obstacle name="test_obstacle" xpos="1.0" ypos="0.0" zpos="0.0" length="1.0" width="1.0" height="1.0"/>
+
+</robot>

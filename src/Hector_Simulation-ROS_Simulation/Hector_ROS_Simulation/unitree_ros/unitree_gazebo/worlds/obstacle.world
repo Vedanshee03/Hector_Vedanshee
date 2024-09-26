@@ -1,0 +1,78 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+    <world name="obstacle_world">
+        <!-- Physics settings -->
+        <physics type="ode">
+            <max_step_size>0.001</max_step_size>
+            <real_time_factor>1</real_time_factor>
+            <real_time_update_rate>1000</real_time_update_rate>
+            <gravity>0 0 -9.81</gravity>
+            <ode>
+                <solver>
+                    <type>quick</type>  
+                    <iters>50</iters> 
+                    <sor>1.3</sor>
+                </solver>  
+                <constraints>
+                    <cfm>0.0</cfm>
+                    <erp>0.2</erp>
+                    <contact_max_correcting_vel>10.0</contact_max_correcting_vel>
+                    <contact_surface_layer>0.001</contact_surface_layer>
+                </constraints>  
+            </ode>
+        </physics>
+
+        <!-- Sky and scene settings -->
+        <scene>
+            <sky>
+                <clouds>
+                    <speed>12</speed>
+                </clouds>
+            </sky>
+        </scene>
+
+        <!-- Global light source -->
+        <include>
+            <uri>model://sun</uri>
+        </include>
+
+        <!-- Ground plane -->
+        <include>
+            <uri>model://ground_plane</uri>
+        </include>
+
+        <!-- Box obstacle model -->
+        <model name="obstacle">
+            <pose>1 0 0.5 0 0 0</pose> <!-- Position the box obstacle in the world -->
+            <static>true</static>
+            <link name="obstacle_link">
+                <visual>
+                    <geometry>
+                        <box>
+                            <size>1 1 1</size> <!-- Size of the obstacle: 1m x 1m x 1m -->
+                        </box>
+                    </geometry>
+                    <material>
+                        <ambient>1 0 0 1</ambient> <!-- Red color for the obstacle -->
+                        <diffuse>1 0 0 1</diffuse>
+                    </material>
+                </visual>
+                <collision>
+                    <geometry>
+                        <box>
+                            <size>1 1 1</size> <!-- Collision box matches the visual size -->
+                        </box>
+                    </geometry>
+                </collision>
+                <inertial>
+                    <mass>10</mass> <!-- Mass of the obstacle -->
+                    <inertia>
+                        <ixx>1</ixx> <ixy>0</ixx> <ixz>0</ixz>
+                        <iyy>1</iyy> <iyz>0</iyz>
+                        <izz>1</izz>
+                    </inertia>
+                </inertial>
+            </link>
+        </model>
+    </world>
+</sdf>

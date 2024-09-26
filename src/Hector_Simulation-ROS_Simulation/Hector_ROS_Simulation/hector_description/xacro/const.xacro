@@ -234,4 +234,18 @@
     <xacro:property name="toe_iyz" value="0.0"/>
     <xacro:property name="toe_izz" value="0.0002"/>
 
+    <!-- SLAMTECH LiDAR (M2M2) Properties -->
+    <xacro:property name="lidar_mass" value="0.165"/>
+    <xacro:property name="lidar_length" value="0.0749"/>
+    <xacro:property name="lidar_radius" value="0.03855"/>
+    <xacro:property name="lidar_com_x" value="0.0"/>
+    <xacro:property name="lidar_com_y" value="0.0"/>
+    <xacro:property name="lidar_com_z" value="0.0"/>
+    <xacro:property name="lidar_ixx" value="0.001"/>
+    <xacro:property name="lidar_ixy" value="0.0"/>
+    <xacro:property name="lidar_ixz" value="0.0"/>
+    <xacro:property name="lidar_iyy" value="0.001"/>
+    <xacro:property name="lidar_iyz" value="0.0"/>
+    <xacro:property name="lidar_izz" value="0.001"/>
+
 </robot>

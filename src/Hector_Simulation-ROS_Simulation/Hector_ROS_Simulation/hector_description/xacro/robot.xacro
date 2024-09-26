@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <robot name="hector_description" xmlns:xacro="http://www.ros.org/wiki/xacro">
-
+    <!--link name="world"/-->
     <xacro:include filename="$(find hector_description)/xacro/const.xacro"/>
     <xacro:include filename="$(find hector_description)/xacro/materials.xacro"/>
     <xacro:include filename="$(find hector_description)/xacro/leg.xacro"/>
@@ -22,6 +22,12 @@
             <child link="base"/>
         </joint>
     </xacro:if> 
+
+    <!--joint name="world_to_base" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="world"/>
+        <child link="base"/>
+    </joint-->
 
     <link name="base">
         <visual>
@@ -128,4 +134,63 @@
         <origin rpy="0 0 0" xyz="${hip_offset_x} ${-hip_offset_y} ${-hip_offset_z}"/>
     </xacro:leg>
 
+    <!-- LiDAR link and joint -->
+    <link name="lidar_link">
+        <inertial>
+            <origin rpy="0 0 0" xyz="${lidar_com_x} ${lidar_com_y} ${lidar_com_z}"/>
+            <mass value="${lidar_mass}"/>
+            <inertia ixx="${lidar_ixx}" ixy="${lidar_ixy}" ixz="${lidar_ixz}" iyy="${lidar_iyy}" iyz="${lidar_iyz}" izz="${lidar_izz}"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="${lidar_length}" radius="${lidar_radius}"/>
+            </geometry>
+            <material name="grey"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="${lidar_length}" radius="${lidar_radius}"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- Joint to attach the LiDAR to the trunk-->
+    <joint name="lidar_joint" type="fixed">
+        <parent link="trunk"/>
+        <child link="lidar_link"/>
+        <origin rpy="0 0 0" xyz="0.0 0.0 0.17"/>
+    </joint>
+
+     <!-- Temporary Obstacle link and joint to test LiDAR-->
+    
+
+    <!--link name="obstacle">
+        <visual>
+            <origin rpy="0 0 0" xyz="1.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.5 0.5 0.5"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="1.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.5 0.5 0.5"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="10.0"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+    </link-->
+
+    <!--Joint to attach the LiDAR to the trunk-->
+    <!--joint name="obstacle_fixed_joint" type="fixed">
+        <parent link="world"/>
+        <child link="obstacle"/>
+        <origin rpy="0 0 0" xyz="5.0 0.0 0.0"/>
+    </joint-->
 </robot>

@@ -160,4 +160,33 @@
         
     </gazebo>
 
+    <!-- Lidar Sensor Plugin -->
+    <gazebo reference="lidar_link">
+        <sensor type="ray" name="lidar_sensor">
+            <update_rate>10</update_rate> <!-- Adjust if necessary -->
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>true</visualize>
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>360</samples>
+                        <resolution>0.391</resolution>
+                        <min_angle>-3.1415</min_angle>
+                        <max_angle>3.1415</max_angle>
+                    </horizontal>
+                </scan>
+                <range>
+                    <min>0.1</min>
+                    <max>40.0</max> <!-- Adjust based on lidar specs -->
+                    <resolution>0.03</resolution>
+                </range>
+            </ray>
+            <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_laser.so">
+                <topicName>/scan</topicName>
+                <frameName>lidar_link</frameName>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+
 </robot>
